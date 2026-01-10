@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emoji Art Generator</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="/vendor/cropper.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Upload → Crop → Convert → Export</p>
+        <h1>Emoji Mosaic Lab</h1>
+        <p class="subtitle">Turn any image into a crisp emoji grid with consistent assets, deterministic matching, and instant exports.</p>
+      </div>
+      <div class="hero-tag">Max 120 × 120 grid</div>
+    </header>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>1. Image & Crop</h2>
+        <p>Choose a photo and drag the crop box. The crop is sent in original pixel coordinates.</p>
+      </div>
+      <div class="panel-body">
+        <label class="file-input">
+          <input id="fileInput" type="file" accept="image/png,image/jpeg" />
+          <span>Upload image</span>
+        </label>
+        <div class="crop-area">
+          <img id="cropImage" alt="Upload preview" />
+          <div id="cropPlaceholder" class="crop-placeholder">Your image shows up here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>2. Settings</h2>
+        <p>Dial in grid size, matching weights, and background behavior.</p>
+      </div>
+      <div class="panel-body settings-grid">
+        <label>
+          Max dimension
+          <input id="maxDim" type="number" min="1" max="120" value="120" />
+        </label>
+        <label>
+          Grid width
+          <input id="gridW" type="number" min="1" max="120" placeholder="auto" />
+        </label>
+        <label>
+          Grid height
+          <input id="gridH" type="number" min="1" max="120" placeholder="auto" />
+        </label>
+        <label class="toggle">
+          <input id="lockAspect" type="checkbox" checked />
+          Lock aspect ratio
+        </label>
+        <label class="toggle">
+          <input id="deterministic" type="checkbox" checked />
+          Deterministic output
+        </label>
+        <label class="toggle">
+          <input id="dithering" type="checkbox" />
+          Dithering (placeholder)
+        </label>
+        <label>
+          Background mode
+          <select id="bgMode">
+            <option value="transparent">Transparent (PNG)</option>
+            <option value="solid">Solid</option>
+          </select>
+        </label>
+        <label>
+          Background color
+          <input id="bgColor" type="color" value="#ffffff" />
+        </label>
+        <div class="weights">
+          <span>Weights</span>
+          <label>
+            Color
+            <input id="weightColor" type="number" step="0.1" value="1.0" />
+          </label>
+          <label>
+            Edge
+            <input id="weightEdge" type="number" step="0.1" value="0.2" />
+          </label>
+          <label>
+            Alpha
+            <input id="weightAlpha" type="number" step="0.1" value="0.1" />
+          </label>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button id="convertBtn" class="primary">Convert to Emoji Grid</button>
+        <span id="status" class="status">Awaiting input.</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>3. Preview & Export</h2>
+        <p>Preview the mosaic and grab your exports.</p>
+      </div>
+      <div class="panel-body preview-grid">
+        <div>
+          <div class="preview-frame">
+            <img id="previewImage" alt="Preview" />
+            <div id="previewPlaceholder" class="crop-placeholder">No preview yet.</div>
+          </div>
+          <div class="meta">
+            <div>Grid: <span id="gridInfo">—</span></div>
+            <div>Hash: <span id="hashInfo">—</span></div>
+          </div>
+          <div id="warnings" class="warnings"></div>
+        </div>
+        <div class="export-card">
+          <h3>Export</h3>
+          <button id="exportText" disabled>Download Text</button>
+          <button id="exportTextSpaced" disabled>Download Text (Spaced)</button>
+          <button id="exportPng" disabled>Download PNG</button>
+          <button id="exportJpg" disabled>Download JPG</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/vendor/cropper.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
